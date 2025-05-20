@@ -19,7 +19,7 @@ if [ ! -f ./apps/api/.env ]; then
   echo "POSTGRES_HOSTNAME=localhost" >> ./apps/api/.env
   echo "POSTGRES_PORT=5432" >> ./apps/api/.env
 
-  echo "POSTGRES_DATABASE=briefer" >> ./apps/api/.env
+  echo "POSTGRES_DATABASE=insighter" >> ./apps/api/.env
   echo "ENVIRONMENT_VARIABLES_ENCRYPTION_KEY=$(openssl rand -hex 32)" >> ./apps/api/.env
   echo "DATASOURCES_ENCRYPTION_KEY=$(openssl rand -hex 32)" >> ./apps/api/.env
   echo "WORKSPACE_SECRETS_ENCRYPTION_KEY=$(openssl rand -hex 32)" >> ./apps/api/.env

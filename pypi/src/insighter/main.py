@@ -58,19 +58,19 @@ def create_volume_if_not_exists(client, volume_name):
 
 
 def handle_existing_container(client, container_name, detach):
-    print('Error: Briefer is already running.', file=sys.stderr)
+    print('Error: Insighter is already running.', file=sys.stderr)
     action = input('Do you want to stop or restart it?\nPress enter to leave it running.\n[stop/restart]: ').strip()
 
     container = client.containers.get(container_name)
 
     if action == "stop":
-        print('Stopping Briefer...')
+        print('Stopping Insighter...')
         container.stop()
-        print('Briefer stopped.')
+        print('Insighter stopped.')
         sys.exit(0)
 
     elif action == "restart":
-        print('Restarting Briefer...')
+        print('Restarting Insighter...')
         container.restart()
         if not detach:
             attach(container)
@@ -113,9 +113,9 @@ def start_or_run_container(client, container_name, image, detach):
 
     # Define the volumes and environment variables
     volumes = {
-        'briefer_psql_data': {'bind': '/var/lib/postgresql/data', 'mode': 'rw'},
-        'briefer_jupyter_data': {'bind': '/home/jupyteruser', 'mode': 'rw'},
-        'briefer_briefer_data': {'bind': '/home/briefer', 'mode': 'rw'}
+        'insighter_psql_data': {'bind': '/var/lib/postgresql/data', 'mode': 'rw'},
+        'insighter_jupyter_data': {'bind': '/home/jupyteruser', 'mode': 'rw'},
+        'insighter_insighter_data': {'bind': '/home/insighter', 'mode': 'rw'}
     }
 
     env = {}
@@ -214,25 +214,25 @@ def attach(container):
 
 
 def signal_handler(sig, frame, container_name, client):
-    print("\nCTRL-C detected. Stopping Briefer...")
+    print("\nCTRL-C detected. Stopping Insighter...")
     container = client.containers.get(container_name)
     container.stop()
-    print("Briefer stopped.")
+    print("Insighter stopped.")
     sys.exit(0)
 
 
 def main():
     # Argument parser
-    parser = argparse.ArgumentParser(description="Run and manage Briefer.")
-    parser.add_argument("-d", "--detach", action="store_true", help="Run Briefer in detached mode")
-    parser.add_argument("--image", type=str, default="briefercloud/briefer", help=argparse.SUPPRESS)
+    parser = argparse.ArgumentParser(description="Run and manage Insighter.")
+    parser.add_argument("-d", "--detach", action="store_true", help="Run Insighter in detached mode")
+    parser.add_argument("--image", type=str, default="insightercloud/insighter", help=argparse.SUPPRESS)
 
     args = parser.parse_args()
 
     # initialize docker client and check if Docker is running
     client = check_docker_running()
 
-    container_name = "briefer"
+    container_name = "insighter"
 
     # if container is already running, handle user input
     if is_container_running(client, container_name):
@@ -240,9 +240,9 @@ def main():
         return
 
     # check or create necessary volumes
-    create_volume_if_not_exists(client, "briefer_psql_data")
-    create_volume_if_not_exists(client, "briefer_jupyter_data")
-    create_volume_if_not_exists(client, "briefer_briefer_data")
+    create_volume_if_not_exists(client, "insighter_psql_data")
+    create_volume_if_not_exists(client, "insighter_jupyter_data")
+    create_volume_if_not_exists(client, "insighter_insighter_data")
 
     # Register signal handler for CTRL-C
     signal.signal(signal.SIGINT, lambda sig, frame: signal_handler(sig, frame, container_name, client))

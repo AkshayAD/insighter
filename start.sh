@@ -29,4 +29,4 @@ fi
 
 # Running docker compose up
 $COMPOSE_CMD up -d
-echo "Briefer is now running at port 3000"
+echo "Insighter is now running at port 3000"
