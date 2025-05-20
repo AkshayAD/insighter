@@ -1,8 +1,8 @@
 {
-  "name": "briefer",
+  "name": "insighter",
   "version": "0.0.113",
   "main": "index.js",
-  "repository": "git@github.com:briefercloud/briefer.git",
+  "repository": "git@github.com:insightercloud/insighter.git",
   "private": true,
   "workspaces": ["apps/*", "packages/*"],
   "packageManager": "yarn@1.22.22",
